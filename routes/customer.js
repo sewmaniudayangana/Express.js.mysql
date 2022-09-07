@@ -41,3 +41,21 @@ router.post('/',(req, res) => {
         }
     }) 
 })
+
+router.put('/', (req, res) => {
+    const id = req.body.id;
+    const name = req.body.name;
+    const address = req.body.address;
+    const contact = req.body.contact;
+
+    var updateQuery = "UPDATE customer SET name=?,address=?,salary=? WHERE id=?";
+    connection.query(updateQuery, [name, address, contact, id], (err, rows) => {
+        if (err) {
+            res.send({"message" : "customer update"})
+
+        } else {
+            res.send({"message" : "Customer is error. try again"})
+        }
+    })
+})
+
