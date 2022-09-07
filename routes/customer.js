@@ -15,3 +15,29 @@ connection.connect(function (err) {
         })
     }
 }) 
+
+router.get('/', (req, res) => {
+    var getAllQuery = "SELECT * FROM customer";
+    connection.query (getAllQuery,(err, rows) => {
+         if(err) console.log(err);
+         res.send(rows);
+    })
+})
+
+router.post('/',(req, res) => {
+    const id = req.body.id;
+    const name = req.body.name;
+    const address = req.body.address;
+    const contact = req.body.contact;
+
+    var saveQuery = "INSERT INTO customer(id,name,address,contact) VALUES(?,?,?,?)";
+
+    connection.query(saveQuery,[id,name,address,salary], (err) => {
+        if (err) {
+            res.send({"message" : "same key"})
+
+        } else {
+            res.send({"message" : "Customer details is ok"})
+        }
+    }) 
+})
