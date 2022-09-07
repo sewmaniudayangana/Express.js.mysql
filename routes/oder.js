@@ -26,3 +26,37 @@ router.get('/' , (req, res) => {
          res.send(rows)
     })
 })
+
+
+router.post('/' ,(req,res) =>{
+    const oid = req.body.oid
+    const date = req.body.cusId
+
+    var saveorderQuery = "INSERT INTO order(oid,date,cusId) VALUES(?,?,?)";
+    connection.query(saveorderQuery,[oid,date,cusId], (err) => {
+        if (err) {
+            res.send({"message": "same orders entry"})
+        } else {
+            res.send({"message": "orders saved"})
+        }  
+    })
+})
+
+
+
+
+router.delete('/:oid', (req, res) => {
+    const oid = req.params.oid
+    var deleteorderQuery = "DELETE FROM order WHERE oid=?";
+    connection.query(deleteorderQuery, [oid], (err, rows) => {
+        if(err) console.log(err);
+
+        if(rows.affectedRows > 0) {
+            res.send({"message" : "order was deleted"})
+        } else {
+            res.send({"message":"data is not found.try it"})
+        }
+    })
+})
+module.exports = router
+
