@@ -59,3 +59,30 @@ router.put('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req,res) => {
+    const id = req.params.id;
+
+    var searchQuery = "SELECT * FROM customer WHERE id=?";
+
+    connection.query(searchQuery, [id], (err, row) => {
+        if(err) console.log(err);
+        res.send(rows);
+    })
+})
+
+router.delete('/:id', (req,res) => {
+    const id = req.params.id;
+    var deleteQuery = "DELETE FROM customer WHERE id=?";
+
+    connection.query(deleteQuery, [id], (err, rows) => {
+        if(err) console.log(err);
+
+        if(rows.affectedRows > 0) {
+            res.send({"message" : " data deleted"})
+        } else {
+            res.send({"message" : "data was not found. try it"})
+        }
+    })
+})
+
+module.exports = router;
